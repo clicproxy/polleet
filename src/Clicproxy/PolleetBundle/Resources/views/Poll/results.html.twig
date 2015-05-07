@@ -3,7 +3,7 @@
     <li>{{ pollanswer.answer }}</li>
     <ul>
         {% for answer in pollanswer.answers %}
-            <li>{{ answer.person.name }} &#60;{{ answer.person.email }}&#62;</li>
+            <li>{{ answer.person.name }} &#60;{{ answer.person.email }}&#62; <a href="{{ path('answer_show', {'id' : answer.id}) }}">edit</a></li>
         {% endfor %}
     </ul>
 {% endfor %}
