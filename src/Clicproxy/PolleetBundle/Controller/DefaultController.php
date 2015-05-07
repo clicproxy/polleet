@@ -33,18 +33,6 @@ class DefaultController extends Controller
      */
     public function linkAction($poll_slug, $poll_answer_slug, $email, $name = null)
     {
-
-        // For dev purpose
-        if ($poll_slug == 'test')
-        {
-            $em = $this->getDoctrine()->getManager();
-            $poll = $em->getRepository('ClicproxyPolleetBundle:Poll')->findOneBy(array('slug' => 'anniv2015'));
-            return $this->redirect($this->generateUrl('thanks', array('slug' => $poll->getSlug())));
-        }
-        else
-            die($poll_slug);
-
-
         $em = $this->getDoctrine()->getManager();
         // Find Poll
         $poll = $em->getRepository('ClicproxyPolleetBundle:Poll')->findOneBy(array('slug' => $poll_slug));
