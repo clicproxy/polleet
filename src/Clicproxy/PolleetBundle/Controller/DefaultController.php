@@ -2,13 +2,10 @@
 
 namespace Clicproxy\PolleetBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Clicproxy\PolleetBundle\Entity\Answer;
+use Clicproxy\PolleetBundle\Entity\Person;
 use Clicproxy\PolleetBundle\Entity\Poll;
 use Clicproxy\PolleetBundle\Entity\PollAnswer;
-use Proxies\__CG__\Clicproxy\PolleetBundle\Entity\Person;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
@@ -50,7 +47,6 @@ class DefaultController extends Controller
         if ($person instanceof Person) {
             if (null != $name && $name != $person->getName()) {
                 $person->setName($name);
-                $em->persist($person);
                 $em->flush();
             }
         } else {
@@ -61,12 +57,17 @@ class DefaultController extends Controller
             $em->flush();
         }
 
-        // Create Answer
-        $answer = new Answer();
-        $answer->setPoll($poll);
-        $answer->setPollAnswer($poll_answer);
-        $answer->setPerson($person);
-        $em->persist($answer);
+        $answer = $em->getRepository('ClicproxyPolleetBundle:Answer')->findOneBy(array('poll' => $poll, 'person' => $person));
+        if ($answer instanceof Answer) {
+            $answer->setPollAnswer($poll_answer);
+        } else {
+            // Create Answer
+            $answer = new Answer();
+            $answer->setPoll($poll);
+            $answer->setPollAnswer($poll_answer);
+            $answer->setPerson($person);
+            $em->persist($answer);
+        }
         $em->flush();
 
         return $this->redirect($this->generateUrl('thanks', array('slug' => $poll->getSlug())));
