@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Person
 {
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName() . '<' . $this->getEmail() . '>';
+    }
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -31,7 +39,7 @@ class Person
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 

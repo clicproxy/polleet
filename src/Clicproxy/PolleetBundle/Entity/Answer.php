@@ -15,6 +15,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Answer
 {
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getPoll()->getSlug() . '/' . $this->getPerson();
+    }
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
