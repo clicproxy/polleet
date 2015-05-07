@@ -244,4 +244,25 @@ class PollController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Show poll results
+     *
+     * @Route("/{slug}/results", name="poll_results")
+     * @Method("GET")
+     * @Template()
+     *
+     * @param $poll_slug
+     * @return array
+     */
+    public function resultsAction ($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $poll = $em->getRepository('ClicproxyPolleetBundle:Poll')->findOneBy(array('slug' => $slug));
+
+        if (!$poll)
+            throw $this->createNotFoundException('Unable to find Poll entity.');
+
+        return array('poll' => $poll);
+    }
 }

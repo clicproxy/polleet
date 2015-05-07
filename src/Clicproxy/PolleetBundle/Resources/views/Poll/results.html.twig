@@ -1,0 +1,10 @@
+<ul>
+{% for pollanswer in poll.pollanswers  %}
+    <li>{{ pollanswer.answer }}</li>
+    <ul>
+        {% for answer in pollanswer.answers %}
+            <li>{{ answer.person.name }} &#60;{{ answer.person.email }}&#62;</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+</ul>
