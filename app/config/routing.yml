@@ -1,0 +1,5 @@
+clicproxy_polleet:
+    resource: "@ClicproxyPolleetBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
